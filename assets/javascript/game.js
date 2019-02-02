@@ -81,8 +81,13 @@ document.onkeyup = function (event) {
 
     if (userGuess === "a") {
 
-        userInput.textContent = "Your choices: " + userGuess;
+        ++win;
+        
     }
+
+    winText.textContent = "wins: " + win;
+
+    userInput.textContent = "Your choices: " + userGuess;
 
     document.write("Your choice " + userGuess);
 }
