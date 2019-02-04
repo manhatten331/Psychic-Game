@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="/Psychic-Game/assets/css/style.css">
-    <!-- <script type="text/javascript" src="/Psychic-Game/assets/javascript/game.js"></script> -->
+    <link rel="javascript" script type="text/javascript" src="/Psychic-Game/assets/javascript/game.js">
+    </script>
     <title>Manzell's Psychic Game</title>
 </head>
 
@@ -86,13 +87,14 @@
         ]
 
         // Blank array for storing my key strokes
-        var listGuess = [""];
+        var listGuess = [];
 
         // Variables that are going to count wins, losses, and number of games
         var win = 0;
         var loss = 0;
         var gamesLeft = 10;
-        
+        var guessesLeft = 10;
+
 
         // Variables that call places in the HTML where we will display input
         var userInput = document.getElementById("userInput-text");
@@ -102,7 +104,9 @@
         var gamesLeft = document.getElementById("gamesLeft-text");
         var numGuess = document.getElementById("numGuesses-text");
 
-
+        
+        var cpuGuess = cpuOptions[Math.floor(Math.random() * cpuOptions.length)];
+        
 
         document.onkeyup = function (event) {
 
@@ -110,32 +114,50 @@
             // Determines which key was pressed
             var userGuess = event.key;
 
-        
-            var cpuGuess = cpuOptions[Math.floor(Math.random() * cpuOptions.length)];
+            // Allows the computer to choose a letter in the Alphabet
+            // var cpuGuess = cpuOptions[Math.floor(Math.random() * cpuOptions.length)];
 
+
+            // If statement that will determine which key is pressed
             if (userGuess === userOptions) {
 
-                listGuess.push(userGuess.toString)
-                
 
-            }else if (cpuGuess === userGuess){
+                // The if statement continues... if the user guesses what the computer is thinking then add 1 to their score and resets the array
+            } else if (cpuGuess === userGuess) {
                 win++;
-            }else{
-                loss++;
+                listGuess = [];
+                
+                // If statement continued... if the user doesn't guess what the user is thinkning then add 1 to their losses and resets the array
+            } else {
+                // loss++;
+                guessesLeft--;
+                if (guessesLeft === 0) {
+                    listGuess = [];
+                    guessesLeft = 10;
+                    loss++;
+                    // var cpuGuess = cpuOptions[Math.floor(Math.random() * cpuOptions.length)];
+                }
             }
-        
-            
-          
 
+            
+                // if (guessesLeft === 0) {
+                //     listGuess = [];
+                // }
+            
+            // Pushes the the key strokes from the user into an array that will display on the screen so the user knows which keys have been pressed.
+            listGuess.push(userGuess)
+
+            // Displays our input onto the DOM with delcared variables
             winText.textContent = "wins: " + win;
             lossText.textContent = "losses: " + loss;
-
             userInput.textContent = "Your choices: " + userGuess;
             cpuInput.textContent = "Computer choice: " + cpuGuess;
-            numGuess.textContent = "Your guesses: " + listGuess[0];
-        
+            numGuess.textContent = "Your guesses: " + listGuess;
 
         }
+
+
+
 
 
     </script>
